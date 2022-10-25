@@ -2,5 +2,3 @@ FontAwesome
   <p>DashbprdCom solid icon <FontAwesome icon="user" /></p>
   <p>DashbprdCom Regular icon <FontAwesome :icon="['far', 'user']" /></p>
   <p>DashbprdCom brand icon <FontAwesome :icon="['fab', 'facebook']" /></p>
-
-  zepiiiiiiiiiiiiiii

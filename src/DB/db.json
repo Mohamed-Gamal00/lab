@@ -1,0 +1,85 @@
+{
+  "users": [
+    {
+      "name": "mohamed gamal",
+      "email": "mohamed@yahoo.com",
+      "pass": "125486247822",
+      "id": 1
+    },
+    {
+      "name": "khaled",
+      "email": "khaled@yahoo.com",
+      "pass": "12312354",
+      "id": 2
+    },
+    {
+      "name": "omar ahmed",
+      "email": "gamal5487@u.com",
+      "pass": "12345678910",
+      "id": 3
+    },
+    {
+      "name": "mohamed gamal",
+      "email": "gmohamed777@yahoo.com",
+      "pass": "123456789",
+      "id": 4
+    },
+    {
+      "name": "mohamed gamal",
+      "email": "mo123@jmail.com",
+      "pass": "1234567",
+      "id": 5
+    }
+  ],
+  "locations": [
+    {
+      "name": "اورجانو",
+      "phone": "0123012457",
+      "address": "المنصورة",
+      "userId": 1,
+      "id": 1
+    },
+    {
+      "name": "كابتتشينو",
+      "phone": "0112457896",
+      "address": "القاهرة",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "name": "Bazoka",
+      "phone": "1234568520",
+      "address": "cairo",
+      "userId": 3,
+      "id": 3
+    },
+    {
+      "name": "marchmelo",
+      "phone": "12458795231",
+      "address": "suize",
+      "userId": 3,
+      "id": 4
+    },
+    {
+      "name": "elmahalaRes",
+      "phone": "1245701252",
+      "address": "Elmahala",
+      "userId": 3,
+      "id": 5
+    },
+    {
+      "name": "bdgffbdfbdfb",
+      "phone": "0000000\\411\\1\\",
+      "address": "fgbfdgbdb",
+      "userId": 3,
+      "id": 6
+    },
+    {
+      "name": "malaka",
+      "phone": "mmk ujvwdvadw",
+      "address": "jijijjii",
+      "userId": 3,
+      "id": 7
+    }
+  ]
+}

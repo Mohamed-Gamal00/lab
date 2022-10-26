@@ -7,6 +7,7 @@ import ErrorPageView from "../views/ErrorPageView.vue";
 import UpdateProfile from "../components/Profile/UpdateProfilCom.vue";
 import DashbordView from "../views/DashbordView.vue";
 import DoctorsView from "../views/DoctorsView.vue";
+import MembersView from "../views/MembersView.vue";
 const routes = [
   {
     path: "/",
@@ -22,6 +23,11 @@ const routes = [
     path: "/doctors",
     name: "doctors",
     component: DoctorsView,
+  },
+  {
+    path: "/members",
+    name: "members",
+    component: MembersView,
   },
   {
     path: "/about",

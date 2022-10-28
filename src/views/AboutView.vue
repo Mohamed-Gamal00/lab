@@ -28,12 +28,20 @@
             >
               <div clasns="row">
                 <div class="col-lg-12">
-                  <form>
+                  <form @click.prevent>
                     <div class="mb-4">
                       <label for="username" class="form-label text-dark mb-0">
                         <FontAwesome icon="user" />اسم المستخدم</label
                       >
-                      <input type="text" class="form-control" id="username" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        v-model="state.numbers"
+                      />
+                      <span class="erroe-feedbak" v-if="v$.numbers.$error">{{
+                        v$.numbers.$errors[0].$message
+                      }}</span>
                     </div>
                     <div class="mb-4">
                       <label for="password" class="form-label text-dark mb-0"
@@ -43,12 +51,23 @@
                         type="password"
                         class="form-control"
                         id="password"
+                        v-model="state.pass"
                       />
+                      <span class="erroe-feedbak" v-if="v$.pass.$error">{{
+                        v$.pass.$errors[0].$message
+                      }}</span>
                     </div>
                     <div class="d-grid">
-                      <button type="submit" class="btncolor">
+                      <button
+                        type="submit"
+                        @click="userlogin()"
+                        class="btncolor"
+                      >
                         تسجيل الدخول
                       </button>
+                      <span class="text-dark text-center">
+                        {{ UsernotFoundError }}
+                      </span>
                     </div>
                   </form>
                 </div>
@@ -65,10 +84,63 @@
 </template>
 <script>
 // import NavBarCom from "@/components/header/NavBar.vue";
+import axios from "axios";
+import useVlidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import { reactive, computed } from "vue";
 export default {
   name: "AboutView",
   components: {
     // NavBarCom,
+  },
+  //composition Api
+  setup() {
+    //data
+    const state = reactive({
+      numbers: "",
+      pass: "",
+    });
+    //validations
+    const rules = computed(() => {
+      return {
+        numbers: { required },
+        pass: { required },
+      };
+    });
+    const v$ = useVlidate(rules, state);
+    return {
+      state,
+      v$,
+    };
+  },
+  data() {
+    return {
+      UsernotFoundError: "",
+    };
+  },
+  methods: {
+    async userlogin() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("form validated Succesfuly");
+        let result = await axios.get(
+          `http://localhost:3000/forms?numbers=${this.state.numbers}&pass=${this.state.pass}`
+        );
+        console.log(result);
+        if (result.status == 200 && result.data.length > 0) {
+          console.log("loged in");
+          localStorage.setItem("user-data", JSON.stringify(result.data[0]));
+          this.$router.push({ name: "dashbord" });
+          // console.log("loged in");
+          // this.$router.push({ name: "home" });
+        } else {
+          this.UsernotFoundError = `تسجيل دخول خاطئ`;
+          console.log("user not found");
+        }
+      } else {
+        console.log("form validation Faild");
+      }
+    },
   },
 };
 </script>

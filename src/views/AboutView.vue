@@ -130,11 +130,11 @@ export default {
         if (result.status == 200 && result.data.length > 0) {
           console.log("loged in");
           localStorage.setItem("user-data", JSON.stringify(result.data[0]));
-          this.$router.push({ name: "dashbord" });
+          this.$router.push({ name: "members" });
           // console.log("loged in");
           // this.$router.push({ name: "home" });
         } else {
-          this.UsernotFoundError = `تسجيل دخول خاطئ`;
+          this.UsernotFoundError = "تسجيل دخول خاطئ";
           console.log("user not found");
         }
       } else {

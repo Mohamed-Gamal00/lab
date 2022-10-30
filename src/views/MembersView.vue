@@ -17,7 +17,7 @@ export default {
   <div class="container-fluid">
     <div class="row">
       <!-- sideBar -->
-      <div class="col-lg-2" style="background-color: white">
+      <div class="col-lg-2">
         <SideBar />
       </div>
       <!-- members -->

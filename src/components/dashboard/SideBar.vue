@@ -18,7 +18,7 @@
         </li>
       </router-link>
       <!-- reports -->
-      <router-link :to="{ name: 'dashbord' }">
+      <router-link :to="{ name: 'reports' }">
         <li class="mt-4">
           <span
             ><span><img src="@/assets/HOME/graph.svg" alt="" /></span>
@@ -27,7 +27,7 @@
         </li>
       </router-link>
       <!-- الطلبات -->
-      <router-link :to="{ name: 'dashbord' }">
+      <router-link :to="{ name: 'orders' }">
         <li class="mt-4">
           <span
             ><span><img src="@/assets/HOME/graph.svg" alt="" /></span>
@@ -36,7 +36,7 @@
         </li>
       </router-link>
       <!-- الملخص -->
-      <router-link :to="{ name: 'dashbord' }">
+      <router-link :to="{ name: 'summery' }">
         <li class="mt-4">
           <span
             ><span><img src="@/assets/HOME/enquiries.svg" alt="" /></span
@@ -60,7 +60,8 @@
           <span style="margin-right: 26px">الاعضاء</span>
         </li>
       </router-link>
-      <router-link :to="{ name: 'dashbord' }">
+      <!-- SettingView -->
+      <router-link :to="{ name: 'setting' }">
         <li class="mt-4">
           <span><FontAwesome style="color: #bbc5d5" icon="gear" /></span>
           <span style="margin-right: 26px">الاعدادات</span>

@@ -8,6 +8,10 @@ import UpdateProfile from "../components/Profile/UpdateProfilCom.vue";
 import DashbordView from "../views/DashbordView.vue";
 import DoctorsView from "../views/DoctorsView.vue";
 import MembersView from "../views/MembersView.vue";
+import ReportsView from "../views/ReportsView.vue";
+import OrdersView from "../views/OrdersView.vue";
+import SummaryView from "../views/SummaryView.vue";
+import SettingView from "../views/SettingView.vue";
 const routes = [
   {
     path: "/",
@@ -28,6 +32,26 @@ const routes = [
     path: "/members",
     name: "members",
     component: MembersView,
+  },
+  {
+    path: "/reports",
+    name: "reports",
+    component: ReportsView,
+  },
+  {
+    path: "/orders",
+    name: "orders",
+    component: OrdersView,
+  },
+  {
+    path: "/summery",
+    name: "summery",
+    component: SummaryView,
+  },
+  {
+    path: "/setting",
+    name: "setting",
+    component: SettingView,
   },
   {
     path: "/about",

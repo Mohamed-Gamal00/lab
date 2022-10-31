@@ -12,10 +12,14 @@
         <button
           type="button"
           class="btn btn-primary"
+          style="background-color: #322a7d"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
           اضافة عضو
+          <span
+            ><FontAwesome style="color: orange" icon="user-plus" class="mr-3"
+          /></span>
         </button>
         <!-- Modal -->
         <div

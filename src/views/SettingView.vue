@@ -6,16 +6,19 @@
         <SideBar />
       </div>
       <!-- Doctors -->
-      <div class="col-lg-10" style="background-color: #f5f6fa">setting</div>
+      <div class="col-lg-10" style="background-color: #f5f6fa">
+        <SettingCom />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import SideBar from "@/components/dashboard/SideBar.vue";
+import SettingCom from "@/components/dashboard/settings/SettingsCom.vue";
 export default {
   name: "DoctorsView",
-  components: { SideBar },
+  components: { SideBar, SettingCom },
 };
 </script>
 

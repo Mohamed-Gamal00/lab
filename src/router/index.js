@@ -10,7 +10,7 @@ import DoctorsView from "../views/DoctorsView.vue";
 import MembersView from "../views/MembersView.vue";
 import ReportsView from "../views/ReportsView.vue";
 import OrdersView from "../views/OrdersView.vue";
-import SummaryView from "../views/SummaryView.vue";
+import ProvidersView from "../views/ProvidersView.vue";
 import SettingView from "../views/SettingView.vue";
 const routes = [
   {
@@ -44,9 +44,9 @@ const routes = [
     component: OrdersView,
   },
   {
-    path: "/summery",
-    name: "summery",
-    component: SummaryView,
+    path: "/providers",
+    name: "providers",
+    component: ProvidersView,
   },
   {
     path: "/setting",

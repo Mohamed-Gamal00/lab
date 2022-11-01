@@ -197,7 +197,7 @@ export default {
 .doctorsdetails {
   margin-top: 20px;
   padding: 10px;
-  border: 1px solid rgb(214, 55, 55);
+  /* border: 1px solid rgb(214, 55, 55); */
   border-radius: 20px;
 }
 </style>

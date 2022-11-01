@@ -6,16 +6,19 @@
         <SideBar />
       </div>
       <!-- Doctors -->
-      <div class="col-lg-10" style="background-color: #f5f6fa">summery</div>
+      <div class="col-lg-10" style="background-color: #f5f6fa">
+        <ProvidersCom />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import SideBar from "@/components/dashboard/SideBar.vue";
+import ProvidersCom from "@/components/dashboard/providers/ProvidersCom.vue";
 export default {
-  name: "DoctorsView",
-  components: { SideBar },
+  name: "ProvidersView",
+  components: { SideBar, ProvidersCom },
 };
 </script>
 

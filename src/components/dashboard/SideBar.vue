@@ -35,13 +35,13 @@
           <span style="margin-right: 26px">الطلبات</span>
         </li>
       </router-link>
-      <!-- الملخص -->
-      <router-link :to="{ name: 'summery' }">
+      <!-- التجار -->
+      <router-link :to="{ name: 'providers' }">
         <li class="mt-4">
           <span
             ><span><img src="@/assets/HOME/enquiries.svg" alt="" /></span
           ></span>
-          <span style="margin-right: 26px">الملخص</span>
+          <span style="margin-right: 26px">التجار</span>
         </li>
       </router-link>
       <!-- الاطباء -->

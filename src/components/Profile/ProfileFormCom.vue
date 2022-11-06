@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <NavBarCom />
     <form @click.prevent>
@@ -86,4 +86,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style></style> -->

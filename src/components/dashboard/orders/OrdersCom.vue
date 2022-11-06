@@ -10,7 +10,6 @@
       <span class="float-start">
         <!-- Button trigger modal -->
         <button
-          type="button"
           class="btn btn-primary"
           style="background-color: #322a7d"
           data-bs-toggle="modal"
@@ -79,12 +78,18 @@
                     <td>
                       <span class=""
                         ><button
+                          class="btn btn-primary"
                           @click="faq.open = !faq.open"
-                          style="margin-left: 27px"
+                          style="margin-left: 27px; background-color: #322a7d"
                         >
                           التفاصيل
-                        </button></span
-                      >
+                          <span
+                            ><FontAwesome
+                              style="color: orange"
+                              icon="circle-chevron-down"
+                          /></span>
+                        </button>
+                      </span>
                     </td>
                   </tr>
                 </tbody>

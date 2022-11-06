@@ -1,6 +1,5 @@
-<template>
+<!-- <template>
   <div>
-    <!-- Button trigger modal -->
     <button
       type="button"
       class="btn btn-primary"
@@ -10,7 +9,6 @@
       Add New Restaurant
     </button>
 
-    <!-- Modal -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -192,4 +190,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style></style> -->

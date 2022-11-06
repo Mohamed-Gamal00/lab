@@ -1,13 +1,18 @@
 <template>
   <div class="container mt-5">
     <!-- header -->
-    <div class="mt-2">
+    <div class="mt-2 fw-bold fs-4">
       <span
         ><span><FontAwesome icon="user-doctor" />الأطباء</span>
       </span>
       <span class="float-start">
-        <button type="button" class="btn btn-primary">
-          اضافة طبيب <span><FontAwesome icon="user-plus" /></span>
+        <button
+          type="button"
+          class="btn btn-primary"
+          style="background-color: #322a7d"
+        >
+          اضافة طبيب
+          <span><FontAwesome style="color: orange" icon="user-plus" /></span>
         </button>
       </span>
     </div>
@@ -65,18 +70,29 @@
             <div class="row d-flex justify-content-center">
               <div class="col-4 text-start">
                 <span class="fw-bold">اليوم {{ faq.time }} صباحا</span>
-                <span class="d-block"
-                  ><p>
+                <span class="d-block">
+                  <div class="dropdown">
                     <button
-                      class="btn btn-primary mt-4"
-                      @click="faq.open = !faq.open"
+                      class="btn mt-4 btn-secondary dropdown-toggle"
                       type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      style="background-color: #322a7d"
                     >
-                      وصف الطلبات
-
-                      <span><FontAwesome icon="circle-chevron-down" /></span>
-                    </button></p
-                ></span>
+                      خيارات
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li><a class="dropdown-item" href="#">تعديل</a></li>
+                      <li>
+                        <a class="dropdown-item" href="#">حذف</a>
+                      </li>
+                    </ul>
+                  </div>
+                </span>
               </div>
               <div
                 class="col-5 text-center"
@@ -92,7 +108,8 @@
             </div>
           </div>
           <!-- tables -->
-          <div class="" v-show="faq.open">
+          <!-- 
+            <div class="" v-show="faq.open">
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
@@ -149,7 +166,8 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> 
+        -->
           <!-- tebles -->
         </div>
       </div>

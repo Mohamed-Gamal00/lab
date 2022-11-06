@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <form @click.prevent>
     <div class="row g-3 align-items-center">
       <div class="col-auto d-block mx-auto m-3">
@@ -114,4 +114,4 @@ export default {
   color: red;
   font-size: 0.85em;
 }
-</style>
+</style> -->

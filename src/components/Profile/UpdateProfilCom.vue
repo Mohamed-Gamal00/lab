@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <NavBarCom />
     <form @click.prevent>
@@ -142,4 +142,4 @@ export default {
   color: red;
   font-size: 0.85em;
 }
-</style>
+</style> -->

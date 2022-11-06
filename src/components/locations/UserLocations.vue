@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <table class="table caption-top" v-if="allLocations.length > 0">
     <caption>
       List of Locations
@@ -35,4 +35,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style></style> -->

@@ -7,7 +7,7 @@
     />
   </div>
   <div class="text-center">
-    <router-link :to="{ name: 'home' }">
+    <router-link :to="{ name: 'about' }">
       <button class="btn btn-info">back to home page</button>
     </router-link>
   </div>

@@ -32,7 +32,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">اضافة عضو</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -41,7 +41,7 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form @click.prevent>
+                <form>
                   <div class="row g-3 align-items-center">
                     <div class="col-auto d-block mx-auto m-3">
                       <!-- <h1>Sign Up</h1> -->
@@ -62,14 +62,44 @@
                         type="text"
                         class="form-control"
                         placeholder="رقم الهاتف"
-                        v-model="state.phone"
+                        v-model="state.number"
                       />
-                      <span class="erroe-feedbak" v-if="v$.phone.$error">{{
-                        v$.phone.$errors[0].$message
+                      <span class="erroe-feedbak" v-if="v$.number.$error">{{
+                        v$.number.$errors[0].$message
                       }}</span>
                     </div>
                   </div>
+                  <!-- password -->
+                  <!-- كلمة المرور -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <div class="">
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="كلمة المرور"
+                          id="password"
+                          v-model="state.password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- تأكيد كلمة المرور -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <div class="mb">
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder=" تأكيد كلمة المرور"
+                          id="password2"
+                          v-model="state.confirm_password"
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <br />
+                  <!-- successMessege ErrorMessege -->
                   <div>
                     <div class="row g-3 align-items-center">
                       <div
@@ -87,6 +117,38 @@
                     </div>
                   </div>
                   <br />
+                  <!-- check box -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      نوع العضوية
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id="flexRadioDefault1"
+                          value="1"
+                          v-model="state.userType"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          مسؤول
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id="flexRadioDefault2"
+                          value="0"
+                          v-model="state.userType"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          مستخدم
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </div>
               <div class="modal-footer">
@@ -112,10 +174,11 @@
     </div>
     <div>
       <!-- content -->
+      <!-- <div v-if="listofmembers.length > 0"> -->
       <div v-if="listofmembers.length > 0">
         <span>list of members ({{ listofmembers.length }})</span>
         <div
-          v-for="(member, i) in listofmembers"
+          v-for="(user, i) in listofmembers"
           :key="i"
           class="row d-flex justify-content-between mt-4 p-2 textcolor fw-bold"
           style="border-radius: 10px; background-color: white"
@@ -123,12 +186,12 @@
           <div class="col-5">
             <div class="row d-flex align-items-center">
               <!-- name -->
-              <div class="col-5">
+              <div class="col-6">
                 <span><FontAwesome icon="user" /></span>
-                <span class="m-3">{{ member.name }}</span>
+                <span class="m-3">{{ user.name }}</span>
               </div>
               <!-- number -->
-              <div class="col-7">
+              <div class="col-5">
                 <span
                   ><button
                     type="button"
@@ -136,7 +199,7 @@
                     style="background-color: #84e0be"
                   >
                     <span><FontAwesome class="btn p-1" icon="phone" /></span
-                    >{{ member.phone }}
+                    >{{ user.number }}
                   </button>
                 </span>
               </div>
@@ -146,9 +209,9 @@
             <div class="row d-flex align-items-center">
               <div class="col-8 d-flex justify-content-center">
                 <span class="d-block"
-                  ><span class="m-3 text-secondary">تاريخ الاضافة </span> اليوم
-                  10:45 صباحا</span
-                >
+                  ><span class="m-3 text-secondary">تاريخ الاضافة </span>
+                  {{ user.created_at }}
+                </span>
               </div>
               <div class="col-4">
                 <span class="d-block">
@@ -180,7 +243,7 @@
         </div>
       </div>
       <div v-else class="alert alert-warning mt-4 text-center" role="alert">
-        no location added yet
+        no user added yet
       </div>
     </div>
   </div>
@@ -197,12 +260,18 @@ export default {
   setup() {
     const state = reactive({
       name: "",
-      phone: "",
+      number: "",
+      password: "",
+      confirm_password: "",
+      userType: "",
     });
     const rules = computed(() => {
       return {
         name: { required, minLength: minLength(10) },
-        phone: { required, minLength: minLength(11) },
+        number: { required, minLength: minLength(11) },
+        password: { required },
+        confirm_password: { required },
+        userType: { required },
       };
     });
     const v$ = useVuelidate(rules, state);
@@ -213,25 +282,26 @@ export default {
   },
   data() {
     return {
-      userId: "",
+      // userId: "",
       successMessege: "",
       errorMessege: "",
       listofmembers: [],
     };
   },
   async mounted() {
-    let user = localStorage.getItem("user-data");
-    if (!user) {
-      this.$router.push({ name: "about" });
-    } else {
-      this.userId = JSON.parse(user).id;
-    }
+    // let user = localStorage.getItem("user-token");
+    // if (!user) {
+    //   this.$router.push({ name: "about" });
+    // } else {
+    //   this.userId = JSON.parse(user).id;
+    // }
     let result = await axios.get(
-      `http://localhost:3000/members?userId=${this.userId}`
+      // `http://localhost:3000/members?userId=${this.userId}`
+      `http://192.168.1.63:8000/api/users`
     );
-    if (result.status == 200 && result.data.length > 0) {
+    if (result.status == 200) {
       console.log(result.data);
-      this.listofmembers = result.data;
+      this.listofmembers = result.data.users;
     }
   },
   methods: {
@@ -239,23 +309,28 @@ export default {
       this.v$.$validate(); //active my validations
       if (!this.v$.$error) {
         console.log("validated");
-        let result = await axios.post(`http://localhost:3000/members`, {
+        let result = await axios.post(`http://192.168.1.63:8000/api/user/add`, {
           name: this.state.name,
-          phone: this.state.phone,
+          number: this.state.number,
+          password: this.state.password,
+          confirm_password: this.state.confirm_password,
+          userType: this.state.userType,
           userId: this.userId,
         });
-        if (result.status == 201) {
+        if (result.status == 200) {
           //show success messge
           this.errorMessege = "";
           this.successMessege = "تم الاضافة بنجاح";
-          this.$router.push({ name: "members" });
+          // this.$router.push({ name: "doctors" });
           setTimeout(() => {
-            this.successMessege = "";
-            this.errorMessege = "";
-            this.state.name = "";
-            this.state.phone = "";
-            this.v$.phone.$errors[0].$message = "";
-            this.v$.name.$errors[0].$message = "";
+            // this.successMessege = "";
+            // this.errorMessege = "";
+            // this.state.name = "";
+            // this.state.number = "";
+            // this.v$.number.$errors[0].$message = "";
+            // this.v$.name.$errors[0].$message = "";
+            // this.$router.push({ name: "members" });
+            this.$router.go(this.$router.currentRoute);
           }, 1000);
         } else {
           this.successMessege = "";

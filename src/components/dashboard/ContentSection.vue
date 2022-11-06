@@ -75,8 +75,10 @@
             class="btn btn-labeled btn-tranparent text-light buttoncss"
           >
             <span class="btn-label"></span>
-            <p class="text-end mb-0">التقارير</p>
-            <p class="text-end mb-0 fontsize">عرض اجدد التقارير عن الطلبات</p>
+            <p class="text-end mb-0">المشتريات</p>
+            <p class="text-end mb-0 fontsize">
+              اضافة مشتريات جديدة لقائمة المشتريات
+            </p>
           </button>
         </span>
         <span class="icondiv-col-3">
@@ -104,40 +106,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>دكتور</td>
-              <td>مرحبا</td>
-              <td>12/12/2022</td>
-              <td>200LE</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>دكتور</td>
-              <td>مرحبا</td>
-              <td>12/12/2022</td>
-              <td>200LE</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>دكتور</td>
-              <td>مرحبا</td>
-              <td>12/12/2022</td>
-              <td>200LE</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>دكتور</td>
-              <td>مرحبا</td>
-              <td>12/12/2022</td>
-              <td>200LE</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>دكتور</td>
-              <td>مرحبا</td>
-              <td>12/12/2022</td>
-              <td>200LE</td>
+            <tr v-for="order in orders" :key="order.id">
+              <th scope="row">{{ order.id }}</th>
+              <td>{{ order.doctor }}</td>
+              <td>{{ order.patient_name }}</td>
+              <td>{{ order.required_date }}</td>
+              <td>{{ order.price }}</td>
             </tr>
           </tbody>
         </table>
@@ -147,9 +121,60 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "ContentSection",
+  name: "MemberCom",
+  data() {
+    return {
+      // userId: "",
+      // successMessege: "",
+      // errorMessege: "",
+      orders: [3],
+    };
+  },
+  async mounted() {
+    let result = await axios.get(`http://192.168.1.63:8000/api/orders`);
+    if (result.status == 200) {
+      console.log(result.data);
+      this.orders = result.data.orders.slice(0, 5);
+    }
+  },
+  // methods: {
+  //   async addmember() {
+  //     this.v$.$validate(); //active my validations
+  //     if (!this.v$.$error) {
+  //       console.log("validated");
+  //       let result = await axios.post(`http://localhost:3000/members`, {
+  //         name: this.state.name,
+  //         phone: this.state.phone,
+  //         userId: this.userId,
+  //       });
+  //       if (result.status == 201) {
+  //         //show success messge
+  //         this.errorMessege = "";
+  //         this.successMessege = "تم الاضافة بنجاح";
+  //         this.$router.push({ name: "members" });
+  //         setTimeout(() => {
+  //           this.successMessege = "";
+  //           this.errorMessege = "";
+  //           this.state.name = "";
+  //           this.state.phone = "";
+  //           this.v$.phone.$errors[0].$message = "";
+  //           this.v$.name.$errors[0].$message = "";
+  //         }, 1000);
+  //       } else {
+  //         this.successMessege = "";
+  //         this.errorMessege = "خطاء : refresh page";
+  //       }
+  //     } else {
+  //       console.log("not validated");
+  //       this.successMessege = "";
+  //       this.errorMessege = "املاء حقول الادخال بطريقة صحيحة";
+  //     }
+  //   },
+  // },
 };
+console.log("jijiji");
 </script>
 
 <style>

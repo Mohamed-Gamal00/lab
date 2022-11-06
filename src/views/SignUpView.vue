@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container"><SignUpFormCom /></div>
 </template>
 
@@ -10,4 +10,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style></style> -->

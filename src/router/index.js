@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import SignUpView from "../views/SignUpView.vue";
-import LoginView from "../views/LoginView.vue";
-import ProfileView from "../views/ProfileView.vue";
+// import HomeView from "../views/HomeView.vue";
+// import SignUpView from "../views/SignUpView.vue";
+// import ProfileView from "../views/ProfileView.vue";
+// import UpdateProfile from "../components/Profile/UpdateProfilCom.vue";
 import ErrorPageView from "../views/ErrorPageView.vue";
-import UpdateProfile from "../components/Profile/UpdateProfilCom.vue";
+// import LoginView from "../views/LoginView.vue";
 import DashbordView from "../views/DashbordView.vue";
 import DoctorsView from "../views/DoctorsView.vue";
 import MembersView from "../views/MembersView.vue";
@@ -12,11 +12,18 @@ import ReportsView from "../views/ReportsView.vue";
 import OrdersView from "../views/OrdersView.vue";
 import ProvidersView from "../views/ProvidersView.vue";
 import SettingView from "../views/SettingView.vue";
+import PurchasesView from "../views/PurchasesView.vue";
+import Es6View from "../views/Es6View.vue";
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "home",
+  //   component: HomeView,
+  // },
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: "/es6",
+    name: "es6",
+    component: Es6View,
   },
   {
     path: "/dashboard",
@@ -54,34 +61,36 @@ const routes = [
     component: SettingView,
   },
   {
-    path: "/about",
+    path: "/purchases",
+    name: "purchases",
+    component: PurchasesView,
+  },
+  {
+    path: "/",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
-  {
-    path: "/sign-up",
-    name: "Signup",
-    component: SignUpView,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: LoginView,
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: ProfileView,
-  },
-  {
-    path: "/updateProfile",
-    name: "UpdateProfile",
-    component: UpdateProfile,
-  },
+  // {
+  //   path: "/login",
+  //   name: "login",
+  //   component: LoginView,
+  // },
+  // {
+  //   path: "/sign-up",
+  //   name: "Signup",
+  //   component: SignUpView,
+  // },
+  // {
+  //   path: "/profile",
+  //   name: "Profile",
+  //   component: ProfileView,
+  // },
+  // {
+  //   path: "/updateProfile",
+  //   name: "UpdateProfile",
+  //   component: UpdateProfile,
+  // },
   //error page stay last
   {
     path: "/:catchAll(.*)",

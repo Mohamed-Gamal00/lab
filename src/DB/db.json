@@ -11,24 +11,6 @@
       "email": "khaled@yahoo.com",
       "pass": "12312354",
       "id": 2
-    },
-    {
-      "name": "omar ahmed",
-      "email": "gamal5487@u.com",
-      "pass": "12345678910",
-      "id": 3
-    },
-    {
-      "name": "mohamed gamal",
-      "email": "gmohamed777@yahoo.com",
-      "pass": "123456789",
-      "id": 4
-    },
-    {
-      "name": "mohamed gamal",
-      "email": "mo123@jmail.com",
-      "pass": "1234567",
-      "id": 5
     }
   ],
   "locations": [

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <NavBarCom />
     <p class="text-end">
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import NavBarCom from "@/components/header/NavBar.vue";
 import AddNewLocations from "@/components/locations/AddNewLocations.vue";
 import UserLocations from "@/components/locations/UserLocations.vue";
@@ -49,4 +48,4 @@ export default {
     }
   },
 };
-</script>
+</script> -->

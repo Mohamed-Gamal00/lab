@@ -1,5 +1,4 @@
-<!-- eslint-disable vue/no-deprecated-router-link-tag-prop -->
-<template>
+<!-- <template>
   <div>
     <ul>
       <router-link
@@ -36,7 +35,6 @@ ul {
   display: flex;
   justify-content: center;
   list-style: none;
-  // margin-bottom: 50px;
   a {
     text-decoration: none;
     font-weight: bold;
@@ -49,4 +47,4 @@ ul a a:hover {
   color: $navcolor;
   box-shadow: 2px 2px 0px $navcolor;
 }
-</style>
+</style> -->

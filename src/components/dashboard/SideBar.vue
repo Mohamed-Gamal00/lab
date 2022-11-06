@@ -35,6 +35,17 @@
           <span style="margin-right: 26px">الطلبات</span>
         </li>
       </router-link>
+      <!-- المشتريات -->
+      <router-link :to="{ name: 'purchases' }">
+        <li class="mt-4">
+          <span
+            ><span
+              ><FontAwesome style="color: #bbc5d5" icon="money-bill"
+            /></span>
+          </span>
+          <span style="margin-right: 26px">المشتريات</span>
+        </li>
+      </router-link>
       <!-- التجار -->
       <router-link :to="{ name: 'providers' }">
         <li class="mt-4">
@@ -54,9 +65,7 @@
       <!-- الاعضاء -->
       <router-link :to="{ name: 'members' }">
         <li class="mt-4">
-          <span
-            ><span><img src="@/assets/HOME/users.svg" alt="" /></span
-          ></span>
+          <span><FontAwesome style="color: #bbc5d5" icon="user" /></span>
           <span style="margin-right: 26px">الاعضاء</span>
         </li>
       </router-link>
@@ -89,6 +98,7 @@ export default {
   name: "SideBar",
   methods: {
     logOut() {
+      localStorage.clear();
       this.$router.push({ name: "about" });
     },
   },

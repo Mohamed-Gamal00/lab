@@ -9,7 +9,9 @@
         <button
           type="button"
           class="btn btn-primary"
+          data-bs-toggle="modal"
           style="background-color: #322a7d"
+          data-bs-target="#exampleModal"
         >
           اضافة طبيب
           <span><FontAwesome style="color: orange" icon="user-plus" /></span>
@@ -18,8 +20,101 @@
     </div>
     <!-- doctor details -->
     <div class="doctorsdetails">
-      <!-- 1 -->
-      <div class="mt-4 p-1" v-for="faq in faqs" :key="faq">
+      <div v-if="doctors.length > 0">
+        <span>list of doctors ({{ doctors.length }})</span>
+      </div>
+      <div class="mt-4 p-1" v-for="doctor in doctors" :key="doctor">
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="false"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border: 2px solid black">
+              <!-- header -->
+              <div class="modal-header d-inline">
+                <h5
+                  class="modal-title fw-bold text-center"
+                  style="color: #322a7d"
+                  id="exampleModalLabel"
+                >
+                  اضافة دكتور
+                </h5>
+                <p class="text-center">اضف طبيب جديد الي قائمة الاطباء</p>
+              </div>
+              <!-- body -->
+              <div class="modal-body">
+                <form>
+                  <!-- <h1> اسم لطبيب </h1> -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="اسم لطبيب"
+                        v-model="name"
+                      />
+                      <span class="erroe-feedbak" v-if="v$.name.$error">{{
+                        v$.name.$errors[0].$message
+                      }}</span>
+                    </div>
+                  </div>
+                  <!-- رقم الهاتف -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="رقم الهاتف"
+                        v-model="number"
+                      />
+                      <span class="erroe-feedbak" v-if="v$.number.$error">{{
+                        v$.number.$errors[0].$message
+                      }}</span>
+                    </div>
+                  </div>
+                  <!-- <h1> عنوان لطبيب </h1> -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="عنوان لطبيب"
+                        v-model="address"
+                      />
+                      <span class="erroe-feedbak" v-if="v$.address.$error">{{
+                        v$.address.$errors[0].$message
+                      }}</span>
+                    </div>
+                  </div>
+                  <br />
+                </form>
+              </div>
+              <!-- footer -->
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  إغلاق
+                </button>
+                <button
+                  @click="AddDoctor()"
+                  type="button"
+                  class="btn btn-primary"
+                  style="background-color: #322a7d"
+                >
+                  اضف الان
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content of page & get -->
         <div
           class="row p-2"
           style="
@@ -31,11 +126,13 @@
           <!-- 1 -->
           <div class="col-6 mt-2">
             <div class="row">
+              <!-- img -->
               <div class="col-2">
-                <div class="text-end">
+                <div class="text-end" width="80" height="80">
                   <img
-                    src="https://st2.depositphotos.com/1007566/11541/v/950/depositphotos_115416492-stock-illustration-avatar-business-man-vector-graphic.jpg"
+                    :src="doctor.image"
                     width="80"
+                    height="80"
                     class="rounded-circle"
                   />
                 </div>
@@ -43,11 +140,11 @@
               <div class="col-6">
                 <div class="mt-2">
                   <h4 class="mb-0 text-black fw-bold">
-                    <strong>د/ {{ faq.name }}</strong>
+                    <strong>د/ {{ doctor.name }}</strong>
                   </h4>
                   <p class="text-secondary address mt-2">
                     <span><FontAwesome icon="location-dot" /></span>
-                    {{ faq.address }}
+                    {{ doctor.address }}
                   </p>
                 </div>
               </div>
@@ -59,7 +156,7 @@
                     style="background-color: #84e0be"
                   >
                     <span><FontAwesome class="btn p-1" icon="phone" /></span
-                    >{{ faq.phone }}
+                    >{{ doctor.number }}
                   </button>
                 </span>
               </div>
@@ -69,7 +166,9 @@
           <div class="col-6 mt-2">
             <div class="row d-flex justify-content-center">
               <div class="col-4 text-start">
-                <span class="fw-bold">اليوم {{ faq.time }} صباحا</span>
+                <span class="fw-bold">
+                  {{ moment(doctor.created_at).calendar() }}</span
+                >
                 <span class="d-block">
                   <div class="dropdown">
                     <button
@@ -86,9 +185,16 @@
                       class="dropdown-menu"
                       aria-labelledby="dropdownMenuButton1"
                     >
-                      <li><a class="dropdown-item" href="#">تعديل</a></li>
                       <li>
-                        <a class="dropdown-item" href="#">حذف</a>
+                        <button class="dropdown-item">تعديل</button>
+                      </li>
+                      <li>
+                        <button
+                          @click="DeleteDoctor(doctor.id)"
+                          class="dropdown-item"
+                        >
+                          حذف
+                        </button>
                       </li>
                     </ul>
                   </div>
@@ -100,75 +206,14 @@
               >
                 <span> الطلبات المطلوبة</span>
                 <span class="d-block">
-                  <h2 class="fw-bold mt-2">
-                    {{ faq.numberofrequierments }}
-                  </h2></span
+                  <h5 class="fw-bold mt-2">
+                    {{ doctor.orders }}
+                  </h5></span
                 >
               </div>
             </div>
           </div>
           <!-- tables -->
-          <!-- 
-            <div class="" v-show="faq.open">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th scope="col" class="text-secondary">رقم الطلب</th>
-                  <th scope="col" class="text-secondary">الدكتور</th>
-                  <th scope="col" class="text-secondary">اسم الحالة</th>
-                  <th scope="col" class="text-secondary">تاريخ الاضافة</th>
-                  <th scope="col" class="text-secondary">السعر</th>
-                  <th scope="col" class="text-secondary">التفاصيل</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>
-                    <div class="text-end">
-                      <img
-                        src="https://st2.depositphotos.com/1007566/11541/v/950/depositphotos_115416492-stock-illustration-avatar-business-man-vector-graphic.jpg"
-                        width="30"
-                        class="rounded-circle"
-                      />
-                      <span class="d-inline">{{ faq.name }}</span>
-                    </div>
-                  </td>
-                  <td>مرحبا</td>
-                  <td>12/12/2022</td>
-                  <td>200LE</td>
-                  <td>
-                    <span class="bg-dark"
-                      ><button style="margin-left: 27px">التفاصيل</button></span
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>
-                    <div class="text-end">
-                      <img
-                        src="https://st2.depositphotos.com/1007566/11541/v/950/depositphotos_115416492-stock-illustration-avatar-business-man-vector-graphic.jpg"
-                        width="30"
-                        class="rounded-circle"
-                      />
-                      <span class="d-inline">دكتور</span>
-                    </div>
-                  </td>
-                  <td>مرحبا</td>
-                  <td>12/12/2022</td>
-                  <td>200LE</td>
-                  <td>
-                    <span class="bg-dark"
-                      ><button style="margin-left: 27px">التفاصيل</button></span
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div> 
-        -->
-          <!-- tebles -->
         </div>
       </div>
     </div>
@@ -176,37 +221,104 @@
 </template>
 
 <script>
+var moment = require("moment");
+moment.locale("ar_SA");
+import axios from "axios";
+// import $ from "jquery";
+// $(".modal-backdrop").css("display", "none");
+import useVuelidate from "@vuelidate/core";
+import { required, minLength } from "@vuelidate/validators";
 export default {
   name: "DoctorsCom",
   data() {
     return {
-      faqs: [
-        {
-          open: false,
-          name: "ulv العسقلاني",
-          phone: "010254747542",
-          address: "شارع الجيش",
-          time: "10:30",
-          numberofrequierments: "25",
-        },
-        {
-          open: false,
-          name: "معتز kijiij",
-          phone: "0102547815552",
-          address: "شارع الجيش",
-          time: "10:30",
-          numberofrequierments: "25",
-        },
-        {
-          open: false,
-          name: "ohgc العسقلاني",
-          phone: "0102547815552",
-          address: "شارع الجيش",
-          time: "10:30",
-          numberofrequierments: "25",
-        },
-      ],
+      moment: moment,
+      doctors: [],
+      v$: useVuelidate(),
+      name: "",
+      number: "",
+      address: "",
     };
+  },
+  validations() {
+    return {
+      name: { required, minLength: minLength(5) },
+      number: { required, minLength: minLength(5) },
+      address: { required, minLength: minLength(5) },
+    };
+  },
+  /* get */
+  async mounted() {
+    let result = await axios.get(
+      `https://e-real.almona.host/lab/public/api/doctors`
+    );
+    if (result.data.success == true) {
+      console.log("data is exist");
+      console.log("doctors result is", result);
+      console.log(result.data);
+      this.doctors = result.data.doctors;
+      console.log("data length is", result.data.doctors.length);
+    } else {
+      console.log("faild data");
+    }
+  },
+  ////////////////////////////////////////////methods post
+  // delete overlay loaddoctors
+  methods: {
+    async loaddoctors() {
+      let result = await axios.get(
+        `https://e-real.almona.host/lab/public/api/doctors`
+      );
+      if (result.data.success == true) {
+        console.log(result.data);
+        this.doctors = result.data.doctors;
+      }
+    },
+    async AddDoctor() {
+      console.log("add doctor function");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("form validated successfuly");
+        let result = await axios.post(
+          `https://e-real.almona.host/lab/public/api/add_doctor`,
+          {
+            name: this.name,
+            number: this.number,
+            address: this.address,
+          }
+        );
+        setTimeout(() => {
+          this.name = "";
+          this.number = "";
+          this.address = "";
+          this.v$.number.$errors[0].$message = "";
+          this.v$.name.$errors[0].$message = "";
+          this.v$.address.$errors[0].$message = "";
+        }, 1000);
+        console.log(result);
+        if (result.data.success == true) {
+          console.log("data true");
+          this.loaddoctors();
+        } else {
+          console.log("data false");
+        }
+      } else {
+        console.log("form validated faild");
+      }
+    },
+    async DeleteDoctor(id) {
+      console.log("delete doctor");
+      let result = await axios.post(
+        `https://e-real.almona.host/lab/public/api/del_doctor/${id}`,
+        {}
+      );
+      if (result.data.success == true) {
+        console.log(" user deleted succesfuly");
+        this.loaddoctors();
+      } else {
+        console.log("faild to delete user");
+      }
+    },
   },
 };
 </script>
@@ -217,5 +329,8 @@ export default {
   padding: 10px;
   /* border: 1px solid rgb(214, 55, 55); */
   border-radius: 20px;
+}
+.erroe-feedbak {
+  color: red;
 }
 </style>

@@ -1,53 +1,12 @@
 {
-  "users": [
+  "doctors": [
     {
-      "name": "mohamed gamal",
-      "email": "mohamed@yahoo.com",
-      "pass": "125486247822",
+      "orders": 35,
+      "name": "معتز العسقلاني",
+      "address": "شارع الجيش",
+      "phone": "01014520369",
+      "time": "10:45",
       "id": 1
-    },
-    {
-      "name": "mohamed gamal",
-      "email": "mo123@jmail.com",
-      "pass": "1234567",
-      "id": 2
-    },
-    {
-      "name": "saad mohamed",
-      "email": "mzidan711@yahoo.com",
-      "pass": "23321254587542",
-      "id": 3
-    }
-  ],
-  "members": [
-    {
-      "name": "mohamed ali",
-      "phone": "0121451225555",
-      "userId": "",
-      "id": 1
-    },
-    {
-      "name": "ahmed sameh",
-      "phone": "01210155842",
-      "userId": "",
-      "id": 2
-    }
-  ],
-  "forms": [
-    {
-      "numbers": "111111",
-      "pass": "111111",
-      "id": 1
-    },
-    {
-      "numbers": "222222",
-      "pass": "222222",
-      "id": 2
-    },
-    {
-      "numbers": "3333333333",
-      "pass": "000000",
-      "id": 3
     }
   ]
 }

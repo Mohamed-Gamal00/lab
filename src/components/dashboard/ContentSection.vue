@@ -174,7 +174,6 @@ export default {
   //   },
   // },
 };
-console.log("jijiji");
 </script>
 
 <style>

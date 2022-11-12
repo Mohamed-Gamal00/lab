@@ -23,8 +23,8 @@
       <div v-if="doctors.length > 0">
         <span>list of doctors ({{ doctors.length }})</span>
       </div>
-      <div class="mt-4 p-1" v-for="doctor in doctors" :key="doctor">
-        <!-- Modal -->
+      <div class="mt-1 p-1" v-for="doctor in doctors" :key="doctor">
+        <!-- Modal of add-->
         <div
           class="modal fade"
           id="exampleModal"
@@ -186,7 +186,15 @@
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <button class="dropdown-item">تعديل</button>
+                        <!-- Modal of edit button -->
+                        <button
+                          @click="EditDoctor(doctor)"
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#edit"
+                        >
+                          تعديل
+                        </button>
                       </li>
                       <li>
                         <button
@@ -210,6 +218,91 @@
                     {{ doctor.orders }}
                   </h5></span
                 >
+              </div>
+            </div>
+          </div>
+          <!-- Modal of edit-->
+          <div
+            class="modal fade"
+            id="edit"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">تعديل</h1>
+                  <button
+                    type="button"
+                    class="btn-close m-0"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <!-- <h1> اسم لطبيب </h1> -->
+                    <div class="row g-3 align-items-center">
+                      <div class="col-auto d-block mx-auto m-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="اسم لطبيب"
+                          v-model="name"
+                        />
+                        <span class="erroe-feedbak" v-if="v$.name.$error">{{
+                          v$.name.$errors[0].$message
+                        }}</span>
+                      </div>
+                    </div>
+                    <!-- رقم الهاتف -->
+                    <div class="row g-3 align-items-center">
+                      <div class="col-auto d-block mx-auto m-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="رقم الهاتف"
+                          v-model="number"
+                        />
+                        <span class="erroe-feedbak" v-if="v$.number.$error">{{
+                          v$.number.$errors[0].$message
+                        }}</span>
+                      </div>
+                    </div>
+                    <!-- <h1> عنوان لطبيب </h1> -->
+                    <div class="row g-3 align-items-center">
+                      <div class="col-auto d-block mx-auto m-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="عنوان لطبيب"
+                          v-model="address"
+                        />
+                        <span class="erroe-feedbak" v-if="v$.address.$error">{{
+                          v$.address.$errors[0].$message
+                        }}</span>
+                      </div>
+                    </div>
+                    <br />
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    الغاء
+                  </button>
+                  <button
+                    @click="UpdateDoctor()"
+                    type="button"
+                    class="btn btn-primary"
+                  >
+                    تعديل
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -238,6 +331,13 @@ export default {
       name: "",
       number: "",
       address: "",
+      doctor: {
+        id: "",
+        name: "",
+        number: "",
+        address: "",
+      },
+      user_id: "",
     };
   },
   validations() {
@@ -317,6 +417,60 @@ export default {
         this.loaddoctors();
       } else {
         console.log("faild to delete user");
+      }
+    },
+    async EditDoctor(doctor) {
+      this.user_id = doctor.id;
+      this.name = doctor.name;
+      this.number = doctor.number;
+      this.address = doctor.address;
+      console.log("EditDoctor call success");
+      console.log("edit doctor");
+      if (!this.v$.$error) {
+        console.log("validated");
+        let editresult = await axios.post(
+          `https://e-real.almona.host/lab/public/api/user/edit/${this.user_id}`,
+          {
+            name: this.name,
+            number: this.number,
+            address: this.address,
+          }
+        );
+        console.log(editresult);
+      } else {
+        console.log("not validate");
+      }
+    },
+    async UpdateDoctor() {
+      console.log("update doctor function");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("form validated successfuly");
+        let result = await axios.post(
+          `https://e-real.almona.host/lab/public/api/edit_doctor/${this.user_id}`,
+          {
+            name: this.name,
+            number: this.number,
+            address: this.address,
+          }
+        );
+        setTimeout(() => {
+          this.name = "";
+          this.number = "";
+          this.address = "";
+          this.v$.number.$errors[0].$message = "";
+          this.v$.name.$errors[0].$message = "";
+          this.v$.address.$errors[0].$message = "";
+        }, 1000);
+        console.log(result);
+        if (result.data.success == true) {
+          console.log("data updated succesfuly");
+          this.loaddoctors();
+        } else {
+          console.log("data false");
+        }
+      } else {
+        console.log("form validated faild");
       }
     },
   },

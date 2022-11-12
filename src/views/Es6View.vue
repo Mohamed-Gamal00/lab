@@ -487,10 +487,6 @@ export default {
             this.loadmembers();
             this.$router.go(this.$router.currentRoute);
           }
-
-          // this.$router.push({ name: "members" });          // if (result.status == 200) {
-          //   console.log(result);
-          // }
         } else {
           console.log("not validate");
         }

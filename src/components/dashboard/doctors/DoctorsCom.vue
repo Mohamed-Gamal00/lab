@@ -215,7 +215,7 @@
                 <span> الطلبات المطلوبة</span>
                 <span class="d-block">
                   <h5 class="fw-bold mt-2">
-                    {{ doctor.orders }}
+                    {{ doctor.orders.length }}
                   </h5></span
                 >
               </div>

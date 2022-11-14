@@ -8,13 +8,12 @@
         </span>
       </span>
       <span class="float-start">
-        <!-- Button trigger modal -->
+        <!-- Button modal add purchases -->
         <button
+          @click="add_purchases = true"
           type="button"
           class="btn btn-primary"
           style="background-color: #322a7d"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
         >
           إضافة مشتريات
           <span
@@ -27,130 +26,143 @@
   </div>
   <div>
     <div class="row d-flex justify-content-center">
-      <div class="col-6 p-4 m-1 rounded-3">
+      <div class="col-8 p-4 m-1 rounded-3">
         <!-- اسم المنتج -->
-        <div class="p-4 mb-2 rounded-3 shadow bg-white">
-          <div class="row">
-            <div class="col-3">
-              <div class="fw-bold" style="color: #322a92">
+        <div v-for="purchase in purchases" :key="purchase">
+          <div class="p-4 mb-2 rounded-3 shadow bg-white">
+            <div class="row">
+              <div class="col-3">
+                <div class="fw-bold" style="color: #322a92">
+                  <span
+                    ><h6 class="fw-bold d-inline m-1">
+                      <strong>{{ purchase.name }}</strong>
+                    </h6></span
+                  >
+                </div>
+              </div>
+              <div class="col-3">
                 <span>
-                  <FontAwesome icon="money-bill" />
+                  <h6>
+                    <strong>{{ purchase.provider }}</strong>
+                  </h6>
                 </span>
-                <span
-                  ><h6 class="fw-bold d-inline m-1">
-                    <strong>اسم المنتج</strong>
-                  </h6></span
-                >
+              </div>
+              <div class="col-2">
+                {{ purchase.amount }}x{{ purchase.price }}
+              </div>
+              <div class="col-2">
+                {{ purchase.total_price }} <small>جنيه</small>
+              </div>
+              <div class="col-2">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-secondary dropdown-toggle"
+                    role="button"
+                    id="dropdownMenuLink"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    خيارات
+                  </button>
+
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li>
+                      <button class="dropdown-item" disabled>تعديل</button>
+                    </li>
+                    <li>
+                      <button
+                        @click="deletepurchase(purchase.id)"
+                        class="dropdown-item"
+                      >
+                        حذف
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="col-5">
-              <span>
-                <h6><strong>معتز العسقلاني</strong></h6>
-              </span>
-            </div>
-            <div class="col-2">2 * 400</div>
-            <div class="col-2">800 <small>جنيه</small></div>
           </div>
-        </div>
-        <!-- اسم المنتج -->
-        <div class="p-4 mb-2 rounded-3 shadow bg-white">
-          <div class="row">
-            <div class="col-3">
-              <div class="fw-bold" style="color: #322a92">
-                <span>
-                  <FontAwesome icon="money-bill" />
-                </span>
-                <span
-                  ><h6 class="fw-bold d-inline m-1">
-                    <strong>اسم المنتج</strong>
-                  </h6></span
-                >
+
+          <!-- modal popup -->
+          <div class="root">
+            <teleport to="body">
+              <div class="modalpopup" v-if="add_purchases">
+                <div class="text-center">
+                  <h1>add purchases</h1>
+                  <h2>wellcom here every body</h2>
+                  <!-- اختيار التاجر -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <select class="form-select" v-model="provider_id">
+                        <option disabled value="">اسم التاجر</option>
+                        <option
+                          :value="provider.id"
+                          v-for="provider in providers"
+                          :key="provider.id"
+                        >
+                          {{ provider.name }}
+                        </option>
+                      </select>
+                      <!-- <span class="erroe-feedbak" v-if="v$.selected.$error">{{
+                        v$.selected.$errors[0].$message
+                      }}</span> -->
+                      <!-- <div>Selected: {{ selected }}</div> -->
+                    </div>
+                  </div>
+                  <!-- name اسم المنتج -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="اسم المنتج"
+                        v-model="name"
+                      />
+                      <span class="erroe-feedbak" v-if="v$.name.$error">{{
+                        v$.name.$errors[0].$message
+                      }}</span>
+                    </div>
+                  </div>
+                  <!-- العملية الحسابية -->
+                  <div class="">
+                    <!-- amount -->
+                    <input
+                      style="width: 100px"
+                      class=""
+                      type="number"
+                      id="amount"
+                      v-model="amount"
+                      placeholder="amount"
+                    />&nbsp;
+                    <span class="erroe-feedbak" v-if="v$.amount.$error">{{
+                      v$.amount.$errors[0].$message
+                    }}</span>
+                    <!-- price -->
+                    <input
+                      style="width: 100px"
+                      class=""
+                      type="number"
+                      id="secondNumb"
+                      v-model="price"
+                      placeholder="price"
+                    />
+                    <span class="erroe-feedbak" v-if="v$.price.$error">{{
+                      v$.price.$errors[0].$message
+                    }}</span>
+                    <h6 class="mt-2">result is {{ result }}</h6>
+                  </div>
+                  <button @click="addpurchases()">add</button>&nbsp;
+                  <button @click="(add_purchases = false), reset()">
+                    close
+                  </button>
+                </div>
               </div>
-            </div>
-            <div class="col-5">
-              <span>
-                <h6><strong>معتز العسقلاني</strong></h6>
-              </span>
-            </div>
-            <div class="col-2">2 * 400</div>
-            <div class="col-2">800 <small>جنيه</small></div>
-          </div>
-        </div>
-        <!-- اسم المنتج -->
-        <div class="p-4 mb-2 rounded-3 shadow bg-white">
-          <div class="row">
-            <div class="col-3">
-              <div class="fw-bold" style="color: #322a92">
-                <span>
-                  <FontAwesome icon="money-bill" />
-                </span>
-                <span
-                  ><h6 class="fw-bold d-inline m-1">
-                    <strong>اسم المنتج</strong>
-                  </h6></span
-                >
-              </div>
-            </div>
-            <div class="col-5">
-              <span>
-                <h6><strong>معتز العسقلاني</strong></h6>
-              </span>
-            </div>
-            <div class="col-2">2 * 400</div>
-            <div class="col-2">800 <small>جنيه</small></div>
-          </div>
-        </div>
-        <!-- اسم المنتج -->
-        <div class="p-4 mb-2 rounded-3 shadow bg-white">
-          <div class="row">
-            <div class="col-3">
-              <div class="fw-bold" style="color: #322a92">
-                <span>
-                  <FontAwesome icon="money-bill" />
-                </span>
-                <span
-                  ><h6 class="fw-bold d-inline m-1">
-                    <strong>اسم المنتج</strong>
-                  </h6></span
-                >
-              </div>
-            </div>
-            <div class="col-5">
-              <span>
-                <h6><strong>معتز العسقلاني</strong></h6>
-              </span>
-            </div>
-            <div class="col-2">2 * 400</div>
-            <div class="col-2">800 <small>جنيه</small></div>
-          </div>
-        </div>
-        <!-- اسم المنتج -->
-        <div class="p-4 mb-2 rounded-3 shadow bg-white">
-          <div class="row">
-            <div class="col-3">
-              <div class="fw-bold" style="color: #322a92">
-                <span>
-                  <FontAwesome icon="money-bill" />
-                </span>
-                <span
-                  ><h6 class="fw-bold d-inline m-1">
-                    <strong>اسم المنتج</strong>
-                  </h6></span
-                >
-              </div>
-            </div>
-            <div class="col-5">
-              <span>
-                <h6><strong>معتز العسقلاني</strong></h6>
-              </span>
-            </div>
-            <div class="col-2">2 * 400</div>
-            <div class="col-2">800 <small>جنيه</small></div>
+            </teleport>
           </div>
         </div>
       </div>
       <!-- الاحصائيات -->
-      <div class="col-4 mt-4 bg-white p-4 m-1 rounded-3">
+      <div class="col-3 mt-4 bg-white p-4 m-1 rounded-3">
         <!-- Search form -->
         <div class="row">
           <div class="col-8">
@@ -201,9 +213,150 @@
 </template>
 
 <script>
+import axios from "axios";
+import useVuelidate from "@vuelidate/core";
+import { required, minLength } from "@vuelidate/validators";
 export default {
   name: "PurchasesCom",
+  data() {
+    return {
+      v$: useVuelidate(),
+      amount: "", //amount
+      price: "", //price
+      selected: "",
+      add_purchases: false,
+      providers: [],
+      provider_id: "",
+      name: "", //اسم المنتج
+      purchases: [],
+    };
+  },
+  validations() {
+    return {
+      name: { required, minLength: minLength(5) },
+      provider_id: { required },
+      amount: { required },
+      price: { required },
+    };
+  },
+  //methods result number 4 x 5
+  computed: {
+    result: function () {
+      return this.amount * this.price;
+    },
+  },
+  /* get providers and purchases*/
+  async mounted() {
+    console.log("purchases");
+    let result = await axios.get(
+      `https://e-real.almona.host/lab/public/api/purchases`
+    );
+    if (result.status == 200) {
+      console.log(result.data);
+      this.purchases = result.data.purchases;
+    }
+
+    console.log("providers");
+    let allproviders = await axios.get(
+      `https://e-real.almona.host/lab/public/api/providers`
+    );
+    if (allproviders.status == 200) {
+      console.log(allproviders.data);
+      this.providers = allproviders.data.providers;
+    }
+  },
+  methods: {
+    async loadpurchase() {
+      let result = await axios.get(
+        `https://e-real.almona.host/lab/public/api/purchases`
+      );
+      if (result.data.success == true) {
+        console.log(result.data);
+        this.purchases = result.data.purchases;
+      }
+    },
+    reset() {
+      this.provider_id = "";
+      this.name = "";
+      this.amount = "";
+      this.price = "";
+      this.v$.name.$errors[0].$message = ""; // اسم المنتج
+      this.v$.amount.$errors[0].$message = "";
+      this.v$.price.$errors[0].$message = "";
+      console.log("popup reset success");
+    },
+    async addpurchases() {
+      console.log("add purchases function");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("form validated successfuly");
+        let result = await axios.post(
+          `https://e-real.almona.host/lab/public/api/add_purchase`,
+          {
+            name: this.name,
+            provider_id: this.provider_id,
+            amount: this.amount,
+            price: this.price,
+          }
+        );
+        console.log("add_purchase success");
+        setTimeout(() => {
+          this.provider_id = "";
+          this.name = "";
+          this.amount = "";
+          this.price = "";
+          this.v$.name.$errors[0].$message = ""; // اسم المنتج
+          this.v$.amount.$errors[0].$message = "";
+          this.v$.price.$errors[0].$message = "";
+        });
+        console.log(result);
+        if (result.data.success == true) {
+          console.log("data true purchase added success");
+          this.loadpurchase();
+        } else {
+          console.log("data false");
+        }
+      } else {
+        console.log("form validated faild");
+      }
+    },
+    async deletepurchase(id) {
+      console.log("delete function successfuly");
+      let result = await axios.post(
+        `https://e-real.almona.host/lab/public/api/del_purchase/${id}`,
+        {}
+      );
+      if (result.data.success == true) {
+        console.log(" purchase deleted succesfuly");
+        console.log(result.data);
+        this.loadpurchase();
+      } else {
+        console.log("end dletepurchases");
+      }
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+.root {
+  position: relative;
+}
+
+.modalpopup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.212);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modalpopup > div {
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 10px;
+}
+</style>

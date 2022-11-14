@@ -19,15 +19,15 @@ import PurchasesCom from "@/components/dashboard/purchases/PurchasesCom.vue";
 export default {
   name: "PurchasesView",
   components: { SideBar, PurchasesCom },
-  mounted() {
-    let user = localStorage.getItem("user-token");
-    if (!user) {
-      this.$router.push({ name: "about" });
-    } else {
-      // this.userId = JSON.parse(user).id;
-      console.log("else welcome dashboard");
-    }
-  },
+  // mounted() {
+  //   let user = localStorage.getItem("user-token");
+  //   if (!user) {
+  //     this.$router.push({ name: "about" });
+  //   } else {
+  //     // this.userId = JSON.parse(user).id;
+  //     console.log("else welcome dashboard");
+  //   }
+  // },
 };
 </script>
 

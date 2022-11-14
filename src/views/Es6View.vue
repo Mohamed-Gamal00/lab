@@ -22,6 +22,19 @@ export default {
 
 <style></style> -->
 <template>
+  <div class="root">
+    <button @click="isOpen = true">open</button>
+    <teleport to="body">
+      <div class="modalpopup" v-if="isOpen">
+        <div class="text-center">
+          <h1>new popup</h1>
+          <h2>wellcom here every body</h2>
+          <button @click="isOpen = false">add</button>
+          <button @click="isOpen = false">close</button>
+        </div>
+      </div>
+    </teleport>
+  </div>
   <div class="container mt-5">
     <div class="mt-2 textcolor">
       <span>
@@ -329,6 +342,7 @@ import { required, minLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 import $ from "jquery";
 $(".modal-backdrop").hide();
+
 export default {
   name: "MemberCom",
   setup() {
@@ -359,6 +373,7 @@ export default {
   data() {
     return {
       // userId: "",
+      isOpen: false,
       successMessege: "",
       errorMessege: "",
       users: [],
@@ -531,5 +546,25 @@ export default {
 }
 .modal-backdrop {
   display: none;
+}
+.root {
+  position: relative;
+}
+
+.modalpopup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(80, 67, 67, 0.212);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modalpopup > div {
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 10px;
 }
 </style>

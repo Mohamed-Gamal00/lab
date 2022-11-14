@@ -31,6 +31,7 @@
         <div v-for="purchase in purchases" :key="purchase">
           <div class="p-4 mb-2 rounded-3 shadow bg-white">
             <div class="row">
+              <!-- اسم المنتج -->
               <div class="col-3">
                 <div class="fw-bold" style="color: #322a92">
                   <span
@@ -40,6 +41,7 @@
                   >
                 </div>
               </div>
+              <!-- اسم التاجر -->
               <div class="col-3">
                 <span>
                   <h6>
@@ -47,14 +49,18 @@
                   </h6>
                 </span>
               </div>
+              <!-- الكمية x السعر -->
               <div class="col-2">
                 {{ purchase.amount }}x{{ purchase.price }}
               </div>
+              <!-- السعر الاجمالي -->
               <div class="col-2">
                 {{ purchase.total_price }} <small>جنيه</small>
               </div>
+              <!-- الخيارات    تعديل & حذف -->
               <div class="col-2">
                 <div class="dropdown">
+                  <!-- خيارات dropdown-->
                   <button
                     class="btn btn-secondary dropdown-toggle"
                     role="button"
@@ -66,9 +72,16 @@
                   </button>
 
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <!-- تعديل toggel button-->
                     <li>
-                      <button class="dropdown-item" disabled>تعديل</button>
+                      <button
+                        @click="(edit_purchases = true), Editpurchase(purchase)"
+                        class="dropdown-item"
+                      >
+                        تعديل
+                      </button>
                     </li>
+                    <!-- حذف -->
                     <li>
                       <button
                         @click="deletepurchase(purchase.id)"
@@ -83,7 +96,7 @@
             </div>
           </div>
 
-          <!-- modal popup -->
+          <!-- modal popup add-->
           <div class="root">
             <teleport to="body">
               <div class="modalpopup" v-if="add_purchases">
@@ -159,6 +172,79 @@
               </div>
             </teleport>
           </div>
+          <!-- modal popup edit-->
+          <div class="root">
+            <teleport to="body">
+              <div class="modalpopup" v-if="edit_purchases">
+                <div class="text-center">
+                  <h1>add purchases</h1>
+                  <h2>wellcom here every body</h2>
+                  <!-- اختيار التاجر -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <select class="form-select" v-model="provider_id">
+                        <option disabled value="">اسم التاجر</option>
+                        <option
+                          :value="provider.id"
+                          v-for="provider in providers"
+                          :key="provider.id"
+                        >
+                          {{ provider.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- name اسم المنتج -->
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto d-block mx-auto m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="اسم المنتج"
+                        v-model="name"
+                      />
+                      <span class="erroe-feedbak" v-if="v$.name.$error">{{
+                        v$.name.$errors[0].$message
+                      }}</span>
+                    </div>
+                  </div>
+                  <!-- العملية الحسابية -->
+                  <div class="">
+                    <!-- amount -->
+                    <input
+                      style="width: 100px"
+                      class=""
+                      type="number"
+                      id="amount"
+                      v-model="amount"
+                      placeholder="amount"
+                    />&nbsp;
+                    <span class="erroe-feedbak" v-if="v$.amount.$error">{{
+                      v$.amount.$errors[0].$message
+                    }}</span>
+                    <!-- price -->
+                    <input
+                      style="width: 100px"
+                      class=""
+                      type="number"
+                      id="secondNumb"
+                      v-model="price"
+                      placeholder="price"
+                    />
+                    <span class="erroe-feedbak" v-if="v$.price.$error">{{
+                      v$.price.$errors[0].$message
+                    }}</span>
+                    <h6 class="mt-2">result is {{ result }}</h6>
+                  </div>
+                  <!-- edit -->
+                  <button @click="Updatepurchase()">تعديل</button>&nbsp;
+                  <button @click="(edit_purchases = false), resetedit()">
+                    close
+                  </button>
+                </div>
+              </div>
+            </teleport>
+          </div>
         </div>
       </div>
       <!-- الاحصائيات -->
@@ -221,14 +307,23 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
+      add_purchases: false,
+      edit_purchases: false,
       amount: "", //amount
       price: "", //price
-      selected: "",
-      add_purchases: false,
+      // selected: "",
       providers: [],
       provider_id: "",
       name: "", //اسم المنتج
       purchases: [],
+      // purchase: {
+      //   id: "",
+      //   amount: "", //amount
+      //   price: "", //price
+      //   provider_id: "",
+      //   name: "", //اسم المنتج
+      // },
+      purshase_id: "",
     };
   },
   validations() {
@@ -285,6 +380,13 @@ export default {
       this.v$.price.$errors[0].$message = "";
       console.log("popup reset success");
     },
+    resetedit() {
+      this.provider_id = "";
+      this.name = "";
+      this.amount = "";
+      this.price = "";
+      console.log("popup resetedit success");
+    },
     async addpurchases() {
       console.log("add purchases function");
       this.v$.$validate();
@@ -332,6 +434,49 @@ export default {
         this.loadpurchase();
       } else {
         console.log("end dletepurchases");
+      }
+    },
+    async Editpurchase(purchase) {
+      // this.user_id = purchase.id;
+      this.name = purchase.name;
+      this.amount = purchase.amount;
+      this.price = purchase.price;
+      this.provider_id = purchase.provider_id;
+      this.purshase_id = purchase.id;
+      // this.purchase.id = purchase.id;
+      // this.purchase.name = purchase.name;
+      // this.purchase.amount = purchase.amount;
+      console.log("done open Editpurchase");
+    },
+    async Updatepurchase() {
+      console.log("update purchase function");
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("form validated successfuly");
+        let result = await axios.post(
+          `https://e-real.almona.host/lab/public/api/edit_purchase/${this.purshase_id}`,
+          {
+            name: this.name,
+            amount: this.amount,
+            price: this.price,
+            provider_id: this.provider_id,
+          }
+        );
+        // setTimeout(() => {
+        //   this.name = "";
+        //   this.number = "";
+        //   this.v$.number.$errors[0].$message = "";
+        //   this.v$.name.$errors[0].$message = "";
+        // }, 1000);
+        console.log(result);
+        if (result.data.success == true) {
+          console.log("data updated succesfuly");
+          this.loadpurchase();
+        } else {
+          console.log("data false");
+        }
+      } else {
+        console.log("form validated faild");
       }
     },
   },

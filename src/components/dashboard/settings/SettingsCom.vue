@@ -11,7 +11,7 @@
     <hr />
     <div class="row d-flex justify-content-around">
       <div class="col-4 bg-white m-2 rounded-3">
-        <!-- wellcom message -->
+        <!-- wellcom message &&&&&&  تغيير كلمة المرور -->
         <div class="row d-flex justify-content-center mt-4 mb-5">
           <div class="col-8">
             <div>
@@ -40,98 +40,55 @@
           </div>
         </div>
       </div>
+      <!-- اضافة الالوان -->
       <div class="col-6">
-        <div class="mt-4 mb-5">
-          <span
-            ><h4 class="fw-bold text-black">
-              <strong>الوان الضروس</strong>
-            </h4></span
-          >
-          <div class="flex-nowrap mt-2 bg-white p-3 rounded-2">
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
+        <div class="row">
+          <div class="mt-4 mb-5">
+            <span
+              ><h4 class="fw-bold text-black">
+                <strong>الوان الضروس</strong>
+              </h4></span
             >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="background-color: #dedada"
-              class="btn m-1 fw-bold"
-            >
-              <strong>M31</strong>
-            </button>
-            <button
-              type="button"
-              style="width: 53px; height: 38px"
-              class="btn shadow bg-white text-black fw-bold m-1"
-            >
-              +
-            </button>
+            <span>
+              <!-- اضف لون -->
+              <button
+                @click="isOpen = true"
+                type="button"
+                style="width: 70px; height: 38px"
+                class="btn shadow bg-white text-black fw-bold m-1"
+              >
+                اضف+
+              </button>
+            </span>
+            <div class="d-flex flex-wrap mt-2 bg-white p-3 rounded-2">
+              <span
+                v-for="color in colors"
+                :key="color.id"
+                :style="[color.hex, width, overflow]"
+                class="m-1 fw-bold p-1 text-center rounded-2"
+              >
+                <strong class="colorstyle">{{ color.name }}</strong>
+                <teleport to="body">
+                  <div class="modalpopup" v-if="isOpen">
+                    <div class="text-center">
+                      <h1>new popup</h1>
+                      <h2>choose color</h2>
+                      <div>
+                        <!-- <label for="favcolor">Select your favorite color:</label -->
+                        <br />
+                        <input type="text" v-model="name" />
+                        <input type="color" v-model="hex" /><br />
+                        {{ hex }}
+                      </div>
+                      <button @click="(isOpen = false), addcolor()">
+                        add color
+                      </button>
+                      <button @click="isOpen = false">close</button>
+                    </div>
+                  </div>
+                </teleport>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -140,9 +97,48 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "SettingCom",
+
+  data() {
+    return {
+      isOpen: false,
+      width: "width:60px",
+      overflow: "overflow:hidden",
+      hex: "",
+      name: "",
+      colors: [],
+    };
+  },
+  async mounted() {
+    console.log("providers");
+    let result = await axios.get(
+      `https://e-real.almona.host/lab/public/api/colors`
+    );
+    if (result.status == 200) {
+      console.log(result.data);
+      this.colors = result.data.colors;
+    }
+  },
+  methods: {
+    async addcolor() {
+      console.log("add color fun");
+      let result = await axios.post(
+        `https://e-real.almona.host/lab/public/api/add_color`,
+        {
+          name: this.name,
+          hex: this.hex,
+        }
+      );
+      if (result.data.success == true) {
+        console.log("data true color added success");
+        console.log(result.data.success);
+      } else {
+        console.log("data false");
+      }
+    },
+  },
 };
 </script>
-
 <style></style>

@@ -64,6 +64,7 @@
                   <button
                     class="btn btn-secondary dropdown-toggle"
                     role="button"
+                    style="background-color: #322a7d"
                     id="dropdownMenuLink"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -423,7 +424,7 @@ export default {
       }
     },
     async deletepurchase(id) {
-      console.log("delete function successfuly");
+      console.log("delete function run");
       let result = await axios.post(
         `https://e-real.almona.host/lab/public/api/del_purchase/${id}`,
         {}

@@ -24,7 +24,7 @@
     </div>
     <div>
       <!-- doctor details -->
-      <div class="" v-for="faq in faqs" :key="faq.id">
+      <div class="" v-for="order in orders" :key="order.id">
         <!-- 1 -->
         <div class="mt-4 p-1">
           <div
@@ -38,6 +38,7 @@
             <!-- tables -->
             <div class="">
               <table class="table table-striped table-hover">
+                <!-- Head -->
                 <thead>
                   <tr>
                     <th scope="col" class="text-secondary">رقم الطلب</th>
@@ -49,9 +50,12 @@
                     <th scope="col" class="text-secondary">التفاصيل</th>
                   </tr>
                 </thead>
+                <!-- body get data-->
                 <tbody>
                   <tr>
-                    <th scope="row">1</th>
+                    <!-- رقم الطلب -->
+                    <th scope="row">{{ order.patient_no }}</th>
+                    <!-- اسم الدكتور -->
                     <td>
                       <div class="text-end">
                         <img
@@ -59,11 +63,14 @@
                           width="30"
                           class="rounded-circle"
                         />
-                        <span class="d-inline">دكتور</span>
+                        <span class="d-inline">{{ order.doctor }}</span>
                       </div>
                     </td>
-                    <td>مرحبا</td>
-                    <td>12/12/2022</td>
+                    <!-- اسم المريض -->
+                    <td>{{ order.patient_name }}</td>
+                    <!-- تاريخ الاضافة -->
+                    <td>{{ order.created_at }}</td>
+                    <!-- لون الضرس -->
                     <td>
                       <div
                         style="
@@ -74,12 +81,14 @@
                         "
                       ></div>
                     </td>
-                    <td>200LE</td>
+                    <!-- السعر -->
+                    <td>{{ order.price }}</td>
+                    <!-- التفاصيل -->
                     <td>
                       <span class=""
                         ><button
                           class="btn btn-primary"
-                          @click="faq.open = !faq.open"
+                          @click="order.open = !order.open"
                           style="margin-left: 27px; background-color: #322a7d"
                         >
                           التفاصيل
@@ -94,40 +103,43 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="row" v-show="faq.open">
-                <!-- 1 -->
+              <div class="row" v-show="order.open">
+                <!-- 1 img  اسم الدكتور والعنوان اسم -------الحالة ومعياد الطلب  -->
                 <div class="col-6 mt-2">
                   <div class="row">
                     <!-- img -->
                     <div class="col-2">
                       <div class="text-end">
                         <img
-                          src="https://st2.depositphotos.com/1007566/11541/v/950/depositphotos_115416492-stock-illustration-avatar-business-man-vector-graphic.jpg"
+                          :src="order.image"
                           width="80"
+                          height="80"
                           class="rounded-circle"
                         />
                       </div>
                     </div>
-                    <!-- title -->
+                    <!-- اسم الدكتور والعنوان -->
                     <div class="col-6">
                       <ul class="p-0">
                         <!-- اسم الدكتور والعنوان -->
                         <li class="">
                           <div class="">
                             <h4 class="mb-0 text-black fw-bold">
-                              <strong>د/ معتز العسقلاني</strong>
+                              <strong>د/ {{ order.doctor }}</strong>
                             </h4>
                             <!-- العنوان -->
                             <p class="text-secondary address mt-2">
                               <span><FontAwesome icon="location-dot" /></span>
-                              شارع الجيش - مصر للطيران
+                              {{ order.address }}
                             </p>
                           </div>
                         </li>
                         <!-- ميعاد الطلب -->
                         <li class="text-secondary fw-bold">
                           <p class="m-0 p-0">تاريخ الاضافة</p>
-                          <p class="fw-bold text-black">19/5/2020</p>
+                          <p class="fw-bold text-black">
+                            {{ order.created_at }}
+                          </p>
                         </li>
                       </ul>
                       <!-- التعديل و الحذف-->
@@ -153,12 +165,16 @@
                         <!-- اسم الحالة -->
                         <li class="text-secondary fw-bold">
                           <p class="m-0 p-0">اسم الحالة</p>
-                          <p class="fw-bold text-black">mohamed kalamata</p>
+                          <p class="fw-bold text-black">
+                            {{ order.patient_name }}
+                          </p>
                         </li>
                         <!-- ميعاد الطلب -->
                         <li class="text-secondary fw-bold">
                           <p class="m-0 p-0">ميعاد الطلب</p>
-                          <p class="fw-bold text-black">19/5/2020</p>
+                          <p class="fw-bold text-black">
+                            {{ order.required_date }}
+                          </p>
                         </li>
                       </ul>
                     </div>
@@ -171,29 +187,20 @@
                     <div class="col-3">
                       <ul class="p-0 text-center fw-bold">
                         <li class="text-secondary fw-bold">الضرس</li>
-                        <li>3</li>
-                        <li>4</li>
-                        <li>5</li>
+                        <li>{{ order.type }}</li>
                       </ul>
                     </div>
                     <!-- السعر -->
                     <div class="col-3 fw-bold">
                       <ul class="p-0 text-center">
                         <li class="text-secondary fw-bold">السعر</li>
-                        <li>300 جنيه</li>
-                        <li>300 جنيه</li>
-                        <li>300 جنيه</li>
-                        <li class="mt-3">900 جنيه</li>
+                        <li class="mt-3">{{ order.price }}</li>
                       </ul>
                     </div>
                     <!-- شكل الاسنان -->
                     <div class="col-6">
                       <div class="text-center">
-                        <img
-                          src="https://o.remove.bg/downloads/e5bf83ee-09b8-444a-959e-c5716bfb42ca/mouth-removebg-preview.png"
-                          width="180"
-                          class="rounded"
-                        />
+                        <img src="" alt="img" width="180" class="rounded" />
                       </div>
                     </div>
                   </div>
@@ -210,16 +217,25 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "OrdersCom",
   data() {
     return {
-      faqs: [
-        {
-          open: false,
-        },
-      ],
+      open: false,
+      orders: [],
     };
+  },
+  async mounted() {
+    console.log("orders");
+    let result = await axios.get(
+      `https://e-real.almona.host/lab/public/api/orders`
+    );
+    if (result.data.success == true) {
+      console.log("result data", result.data);
+      this.orders = result.data.orders;
+      console.log(this.orders);
+    }
   },
 };
 </script>
